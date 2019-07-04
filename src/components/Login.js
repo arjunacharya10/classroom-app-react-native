@@ -29,7 +29,8 @@ import {loginUser} from '../actions';
         //this.props.loginUser({email:this.state.email,password:this.state.password,navigation:''});
     }
 
-
+    //sample added to merge
+    
     render(){
         return(
             <View style={styles.container}>
