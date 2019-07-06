@@ -8,20 +8,18 @@ class Card extends React.Component{
         return(
             <View style={{flex:1,elevation:2,borderRadius:3,backgroundColor:'white',borderBottomWidth:0,borderColor:'#ddd',margin:10,marginHorizontal:20,justifyContent:'center'}}>
                 <View style={{flex:1,flexDirection:'row',alignContent:'flex-start',padding:10,borderBottomWidth:1,borderBottomColor:'#ddd'}}>
-                    <View style={{flex:1,alignItems:"flex-start"}}>
-                        <Image source={require('../../images/user.png')} 
-                            style={{width:25,height:25}}
-                        />
-                        <Text style={{fontSize:10}}>@arjun</Text>
+                    
+                    <View style={{flex:1,alignItems:'flex-end'}}>
+                        <Text style={{color:'#000',fontSize:12,fontFamily:'roboto',fontWeight:'700'}}></Text>
                     </View>
+
                     <View style={{flex:2,alignItems:'center'}}>
                         <Text style={{color:'#000',fontSize:15,fontFamily:'roboto',fontWeight:'700'}}>Subject</Text>
                     </View>
                     <View style={{flex:1,alignItems:'flex-end'}}>
-                        <TouchableOpacity>
-                            <Icon name="ios-bookmark" size={20}/>
-                        </TouchableOpacity>
-                    </View>    
+                        <Text style={{color:'#000',fontSize:12,fontFamily:'roboto',fontWeight:'700'}}>Date</Text>
+                    </View>
+                     
                 </View>
                 <View style={{flex:2,padding:10}}>
                     <Text style={{color:'#111'}}>Christopher Columbus was an Italian explorer, navigator, and colonist who completed four voyages across the Atlantic Ocean under the auspices of the Catholic Monarchs of Spain. He led the first European expeditions to the Caribbean, Central America, and South America, initiating the permanent European colonization of the Americas.</Text>

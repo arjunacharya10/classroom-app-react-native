@@ -1,6 +1,7 @@
 import React from 'react';
 import {View,Text,TextInput,TouchableOpacity} from 'react-native';
 import {StackActions} from 'react-navigation';
+import axios from 'axios';
 
 const popAction = StackActions.pop({
     n:1
@@ -43,7 +44,17 @@ class SignUp extends React.Component{
         this.setState({confirm:text});
     }
 
-    onPhoneChange
+    onSubmit=()=>{
+        axios.post('http://192.168.43.198:5000/createVolunteer',{
+            name:this.state.name,
+            email:this.state.email,
+            password:this.state.password,
+            organization:this.state.org,
+            phone:this.state.phone
+        })
+        .then(id=>alert(id))
+        .catch(err=>alert(err));
+    }
 
 
     render(){
@@ -96,7 +107,6 @@ class SignUp extends React.Component{
                                 onChangeText={this.onPhoneChange}
                                 underlineColorAndroid='rgba(0,0,0,0)' 
                                 placeholder="Phone"
-                                secureTextEntry={true}
                                 placeholderTextColor = "#aaa"
                                 returnKeyType="done"
                                 keyboardType="numeric"
@@ -127,7 +137,7 @@ class SignUp extends React.Component{
                                 />
                         </View>
                         <View style={{marginTop:20}}>
-                        <TouchableOpacity style={styles.button} onPress={this.onLoginPressed}>
+                        <TouchableOpacity style={styles.button} onPress={this.onSubmit}>
                             <Text style={styles.buttonText}>Sign Up</Text>
                         </TouchableOpacity>    
                         <TouchableOpacity onPress={()=>{this.props.navigation.dispatch(popAction);}} style={{alignItems:'center'}}>

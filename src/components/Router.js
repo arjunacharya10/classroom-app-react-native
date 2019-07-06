@@ -10,6 +10,7 @@ import {Text,View,Image} from 'react-native';
 import Announcement from './callstack/Announcement';
 import {StatusBar} from 'react-native';
 import SignUp from './SignUp';
+import RegisteredEvents from './registeredevents/RegisteredEvents';
 
 
 import {Container,Header, Body, Content} from 'native-base';
@@ -239,6 +240,36 @@ const Auth = createStackNavigator(
     }
 )
 
+const RegisteredEStack = createStackNavigator(
+    {
+        RegisteredEvents:{
+            screen:RegisteredEvents,
+            navigationOptions:{
+                header:null,
+                title:'Registered Events'
+            }
+        }
+    },
+    {
+        initialRouteName: 'RegisteredEvents',
+        headerLayoutPreset:'center',
+        defaultNavigationOptions:{
+            
+            headerStyle: {
+                backgroundColor: '#fff',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color:'#116466',
+                flex:1,
+                fontFamily:'roboto'
+              }   
+        },
+        transitionConfig:()=>fromRight(500),
+    }
+) 
+
 
 const App = createBottomTabNavigator(
     {
@@ -251,15 +282,15 @@ const App = createBottomTabNavigator(
             }
         },
         ClassRooms:{
-            screen:ClassStack,
+            screen:RegisteredEStack,
             navigationOptions:{
                 tabBarLabel:'CLASSROOM',
                 tabBarIcon:({tintColor})=>(
-                    <Icon name="ios-school" color={tintColor} size={24}/>
+                    <Icon name="ios-alarm" color={tintColor} size={24}/>
                 )
             }
         },
-        Inbox:{
+        /*Inbox:{
             screen:InboxStack,
             navigationOptions:{
                 tabBarLabel:'INBOX',
@@ -267,7 +298,7 @@ const App = createBottomTabNavigator(
                     <Icon name="ios-chatboxes" color={tintColor} size={24}/>
                 )
             }
-        },
+        },*/
         Profile:{
             screen:ProfileStack,
             navigationOptions:{
