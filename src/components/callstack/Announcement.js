@@ -18,7 +18,8 @@ export default class Announcement extends React.Component{
         photo:null,
         subject:'',
         body:'',
-        class:''
+        class:'',
+        details:''
     }
 
     onSubjectChange=(text)=>{
@@ -60,60 +61,27 @@ export default class Announcement extends React.Component{
             }
           });
     }
+    componentDWillMount=()=>{
+        const details = this.props.navigation.getParam('details',{});
+        this.setState({details:details.data});
+        console.log(details.data);
+    }
     
     
     render(){
         return(
             <View style={{flex:1}}>
-                    <View style={{flex:1}}>
-                        <TouchableOpacity onPress={()=>this.props.navigation.dispatch(popAction)} style={{flex:1,padding:10}}>
-                            <Icon name="ios-close" size={30}/>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{flex:5}}>
-                        <Text style={{textAlign:'center',fontFamily:'roboto',fontSize:24,fontWeight:'500'}}>Make Announcement</Text>
-                        <View style={{margin:30,padding:10,flex:1,elevation:1,borderBottomWidth:1,borderBottomColor:'#ddd'}}>
-                            <View style={{borderBottomWidth:1,borderColor:'#ddd'}}>
-                                <TextInput value={this.state.subject} onChangeText={this.onSubjectChange} placeholder="Subject"/>
-                            </View>
-                            <View style={{flex:4,borderBottomWidth:1,borderColor:'#ddd'}}>
-                                <View style={{flex:2}}>
-                                <TextInput onChangeText={this.onBodyChange} placeholder="Body" multiline/>
-                                </View>
-                                <View style={{alignSelf:'flex-end'}}>
-                                    <Text>{this.state.body.length}</Text>
-                                </View>
-                            </View>
-                            <View style={{flex:1}}>
-                                <Picker>
-                                    <Picker.Item label="Class 1" value="Class 1"/>
-                                    <Picker.Item label="Class 2" value="Class 2"/>
-                                    <Picker.Item label="Class 3" value="Class 3"/>
-                                    <Picker.Item label="Class 4" value="Class 4"/>
-                                </Picker>
-                            </View>
-                            <View style={{flex:1,flexDirection:'row'}}>
-                                <View>
-                                {this.state.photo?
-                                    
-                                        <Image source={this.state.photo} style={{width:50,height:50}}/>
-                                    
-                                    :
-                                    <View></View>
-                                }
-                                </View>
-                                <View style={{flex:1,paddingTop:10}}>
-                                    <TouchableOpacity onPress={this.handleImagePress} style={{flexDirection:'row',paddingHorizontal:10}}>
-                                        <Icon name="ios-attach" size={24}/>
-                                        <Text style={{paddingLeft:10}}>Attach image</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                            <TouchableOpacity style={styles.buttonStyle}>
-                                <Text style={{color:'white'}}>Announce</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
+                <TouchableOpacity onPress={()=>this.props.navigation.dispatch(popAction)} style={{flex:1,padding:10}}>
+                    <Icon name="ios-close" size={30}/>
+                </TouchableOpacity>
+                <Text style={{textAlign:'center',fontFamily:'roboto',fontSize:24,fontWeight:'500'}}>{details.name}</Text>
+                <Text>Description</Text>
+                <Text>{details.description}</Text>
+                <View>
+                    <Text>From</Text>
+                    <Text>To</Text>
+                </View>
+                
             </View>
         )
     }
@@ -133,3 +101,55 @@ const styles={
         alignItems:'center'
     }
 }
+
+/*{
+    <View style={{flex:1}}>
+    <TouchableOpacity onPress={()=>this.props.navigation.dispatch(popAction)} style={{flex:1,padding:10}}>
+        <Icon name="ios-close" size={30}/>
+    </TouchableOpacity>
+</View>
+<View style={{flex:5}}>
+    <Text style={{textAlign:'center',fontFamily:'roboto',fontSize:24,fontWeight:'500'}}>Make Announcement</Text>
+    <View style={{margin:30,padding:10,flex:1,elevation:1,borderBottomWidth:1,borderBottomColor:'#ddd'}}>
+        <View style={{borderBottomWidth:1,borderColor:'#ddd'}}>
+            <TextInput value={this.state.subject} onChangeText={this.onSubjectChange} placeholder="Subject"/>
+        </View>
+        <View style={{flex:4,borderBottomWidth:1,borderColor:'#ddd'}}>
+            <View style={{flex:2}}>
+            <TextInput onChangeText={this.onBodyChange} placeholder="Body" multiline/>
+            </View>
+            <View style={{alignSelf:'flex-end'}}>
+                <Text>{this.state.body.length}</Text>
+            </View>
+        </View>
+        <View style={{flex:1}}>
+            <Picker>
+                <Picker.Item label="Class 1" value="Class 1"/>
+                <Picker.Item label="Class 2" value="Class 2"/>
+                <Picker.Item label="Class 3" value="Class 3"/>
+                <Picker.Item label="Class 4" value="Class 4"/>
+            </Picker>
+        </View>
+        <View style={{flex:1,flexDirection:'row'}}>
+            <View>
+            {this.state.photo?
+                
+                    <Image source={this.state.photo} style={{width:50,height:50}}/>
+                
+                :
+                <View></View>
+            }
+            </View>
+            <View style={{flex:1,paddingTop:10}}>
+                <TouchableOpacity onPress={this.handleImagePress} style={{flexDirection:'row',paddingHorizontal:10}}>
+                    <Icon name="ios-attach" size={24}/>
+                    <Text style={{paddingLeft:10}}>Attach image</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+        <TouchableOpacity style={styles.buttonStyle}>
+            <Text style={{color:'white'}}>Announce</Text>
+        </TouchableOpacity>
+    </View>
+</View>
+}*/

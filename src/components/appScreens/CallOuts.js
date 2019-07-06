@@ -40,6 +40,10 @@ class CallOuts extends React.Component{
         .catch(err=>{alert("Err");})
     }
 
+    showEventDetails=(details)=>{
+        this.props.navigation.navigate('Announcement',{details:details});
+    }
+
     
 
     onMapIsReady=()=>{
@@ -49,7 +53,11 @@ class CallOuts extends React.Component{
     }
 
     sendEventDetails=(id)=>{
-            axios.post('')
+            axios.post('http://192.168.43.169:5000/getEventDetails',{
+                _id:id
+            })
+            .then(eventDetail=>{this.showEventDetails(eventDetail)})
+            .catch(err=>alert(err))
 
     }
 
