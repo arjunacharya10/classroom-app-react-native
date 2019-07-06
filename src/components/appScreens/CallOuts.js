@@ -19,7 +19,9 @@ class CallOuts extends React.Component{
             longitude:0
         },
         userid:'',
-        events:[]
+        events://[{name:'Arjun',description:'asld',location:{lat:12.97616,lng:77.5946},from:"time",_id:"12345"}]
+        [],
+        
     }
 
 
@@ -30,31 +32,54 @@ class CallOuts extends React.Component{
         });
     }
 
-    componentWillMount=()=>{
+    componentDidMount=()=>{
         const userid = this.props.navigation.getParam('userid', '');
         this.setState({userid:userid});
         axios.post('http://192.168.43.169:5000/getEvents')
-        .then(events=>{console.log(events);this.setState({events:events});})
-        .catch(err=>this.setState({events:[]}))
+        .then(events=>{this.setState({events:events.data})})
+        .catch(err=>{alert("Err");})
     }
 
-    componentWillUpdate=()=>{
-        navigator.geolocation.watchPosition((position)=>{
-            this.setState({curLocation:{latitude:position.coords.latitude,longitude:position.coords.longitude}});
-        })
-    }
+    
 
     onMapIsReady=()=>{
         navigator.geolocation.watchPosition((position)=>{
-            this.setState({curLocation:{latitude:position.coords.latitude,longitude:position.coords.longitude}});
+            
         })
+    }
+
+    sendEventDetails=(id)=>{
+            axios.post('')
+
+    }
+
+
+    locationExists=()=>{
+        const MapWithEvent = this.state.events.map(event=>{
+            return(
+                <Marker
+                    onPress={()=>{this.sendEventDetails(event._id)}}                   //onPress={()=>alert('Pressed!')}
+                    key={event._id}
+                    title="Event title"
+                    description="This is a random desc"
+                    pinColor="red"
+                    coordinate={{
+                        latitude:event.location.lat,
+                        longitude:event.location.lng
+                    }}
+                    >
+                    <Callout>
+                        <CallOutComp  title={event.name} date="date" from="start" to="end" interest="interest"/>
+                    </Callout>
+                </Marker>
+            )
+        });
+        return MapWithEvent;
     }
 
 
     render(){
-
         
-
 
         return(
             <SafeAreaView style={{flex:1,backgroundColor:'rgba(0,0,0,0)'}}>
@@ -86,23 +111,30 @@ class CallOuts extends React.Component{
                         
                 </View>
                 <View style={{flex:1}}>
-                    <MapView
-                        //provider={PROVIDER_GOOGLE}
-                        style={styles.map}
-                        initialRegion={{
-                            latitude: 12.9716,
-                            longitude: 77.5946,
-                            latitudeDelta: 0.0922,
-                            longitudeDelta: 0.0421,
-                            }}
-                       showsMyLocationButton
-                       showsUserLocation
-                        showsCompass
-                        onMapReady={this.onMapIsReady}
-                        zoomEnabled={true}
-                    >
-                        
-                    </MapView>
+                    {
+                        this.state.events.length?
+                        <MapView
+                            //provider={PROVIDER_GOOGLE}
+                            style={styles.map}
+                            initialRegion={{
+                                latitude: 12.9716,
+                                longitude: 77.5946,
+                                latitudeDelta: 0.0922,
+                                longitudeDelta: 0.0421,
+                                }}
+                        showsMyLocationButton
+                        showsUserLocation
+                            showsCompass
+                            zoomEnabled={true}
+                        >
+                            {
+                                this.locationExists()
+                            }
+                        </MapView>:
+                        <View>
+                            <Text>No Events found near you!</Text>
+                        </View>
+                    }
                     </View>
                 </View>
             </SafeAreaView>
