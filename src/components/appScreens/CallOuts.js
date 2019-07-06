@@ -3,11 +3,19 @@ import {View,Text,TouchableOpacity,SafeAreaView,TextInput,ScrollView,Image,Statu
 import Icon from 'react-native-vector-icons/Ionicons';
 import Card from './common/Card';
 import PTRView from 'react-native-pull-to-refresh'
-import MapView ,{PROVIDER_GOOGLE} from 'react-native-maps';
+import CallOutComp from './common/Calloutcomp';
+import MapView ,{PROVIDER_GOOGLE, Marker, Callout} from 'react-native-maps';
 
 
 
 class CallOuts extends React.Component{
+
+    state={
+        curLocation:{
+            latitude:0,
+            longitude:0
+        }
+    }
 
 
     onRefresh=()=>{
@@ -15,6 +23,18 @@ class CallOuts extends React.Component{
             this.forceUpdate();
             setTimeout(()=>{resolve()}, 2000)
         });
+    }
+
+    componentWillUpdate=()=>{
+        navigator.geolocation.watchPosition((position)=>{
+            this.setState({curLocation:{latitude:position.coords.latitude,longitude:position.coords.longitude}});
+        })
+    }
+
+    onMapIsReady=()=>{
+        navigator.geolocation.watchPosition((position)=>{
+            this.setState({curLocation:{latitude:position.coords.latitude,longitude:position.coords.longitude}});
+        })
     }
 
 
@@ -39,16 +59,64 @@ class CallOuts extends React.Component{
                     </View>
                     <View style={{flex:1}}>
                     <MapView
-                        provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                        //provider={PROVIDER_GOOGLE}
                         style={styles.map}
                         initialRegion={{
-                            latitude: 37.78825,
-                            longitude: -122.4324,
-                            latitudeDelta: 0.015,
-                            longitudeDelta: 0.0121,
-                        }}
+                            latitude: 12.9716,
+                            longitude: 77.5946,
+                            latitudeDelta: 0.0922,
+                            longitudeDelta: 0.0421,
+                            }}
+                       showsMyLocationButton
+                       showsUserLocation
+                        showsCompass
+                        onMapReady={this.onMapIsReady}
+                        zoomEnabled={true}
+                    >
+                        
+                        <Marker
+                            //onPress={()=>alert('Pressed!')}
+                            title="Event title"
+                            description="This is a random desc"
+                            pinColor="red"
+                            coordinate={{
+                                latitude: 12.97616,
+                                longitude: 77.5946
+                            }}
                         >
-                        </MapView>
+                            <Callout>
+                                <CallOutComp/>
+                            </Callout>
+                        </Marker>
+                        <Marker
+                        //onPress={()=>alert('Pressed!')}
+                            title="Event title"
+                            description="This is a random desc"
+                            pinColor="red"
+                            coordinate={{
+                                latitude: 12.9516,
+                            longitude: 77.5946
+                            }}
+                        >
+                            <Callout>
+                                <CallOutComp/>
+                            </Callout>
+                        </Marker>
+                        <Marker
+                        //onPress={()=>alert('Pressed!')}
+                            title="Event title"
+                            description="This is a random desc"
+                            pinColor="red"
+                            coordinate={{
+                                latitude: 12.9416,
+                                longitude: 77.5946
+                            }}
+                        >
+                            <Callout>
+                                <CallOutComp/>
+                            </Callout>
+                        </Marker>
+                    </MapView>
                     </View>
                 </View>
             </SafeAreaView>
@@ -72,7 +140,12 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     map: {
-      ...StyleSheet.absoluteFillObject,
+      //...StyleSheet.absoluteFillObject,
+      left:0,
+      right:0,
+      top:0,
+      bottom:0,
+      position:'absolute'
     },
    });
 

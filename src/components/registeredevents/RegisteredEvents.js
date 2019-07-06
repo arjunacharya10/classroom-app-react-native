@@ -18,7 +18,7 @@ export default class RegisteredEvents extends React.Component{
                         <Card navigation={this.props.navigation}    src={require('../images/book2.png')}/>
                         <Card navigation={this.props.navigation}    src={require('../images/book3.png')}/>
                         <Card navigation={this.props.navigation}    src={require('../images/book4.png')}/>
-                        <Card navigation={this.props.navigation}   />
+                        <Card approved={true} navigation={this.props.navigation}   />
                         <Card navigation={this.props.navigation}   />
                     </PTRView>
                 </View>
