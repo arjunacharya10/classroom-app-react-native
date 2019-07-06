@@ -3,6 +3,7 @@ import {Text,View,Image,StatusBar,TouchableOpacity,KeyboardAvoidingView} from 'r
 import { TextInput } from 'react-native-gesture-handler';
 import {connect}from 'react-redux';
 import {loginUser} from '../actions';
+import axios from 'axios';
 
 
  class Login extends React.Component{
@@ -25,7 +26,13 @@ import {loginUser} from '../actions';
     }
 
     onLoginPressed=()=>{
-        this.props.navigation.navigate('App');
+        axios.post('http://192.168.43.169:5000/authenticateVolunteer',{
+            email:this.state.email,
+            password:this.state.password
+        })
+        .then(userid=>{this.props.navigation.navigate('App',{userid:userid});})
+        .catch(err=>alert('Error logging in'));
+        
         //this.props.loginUser({email:this.state.email,password:this.state.password,navigation:''});
     }
 
