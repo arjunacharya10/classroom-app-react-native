@@ -8,7 +8,7 @@ import {loginUser} from '../actions';
  class Login extends React.Component{
 
     state={
-        enail:'',
+        email:'',
         password:''
     }
 
@@ -30,18 +30,21 @@ import {loginUser} from '../actions';
     }
 
     //sample added to merge
+    validate=()=>{
+        
+    }
     
     render(){
         return(
             <View style={styles.container}>
                 <StatusBar barStyle="dark-content" backgroundColor="#fff" hidden/>
                 <View style={styles.logoStyle}>
-                    <Image  style={{width:200,height:100}} source={require('./images/book8.png')}/>
+                    <Image  /*style={{width:200,height:100}}*/ resizeMode="contain" source={require('./images/cwf.png')} />
                     
                 </View>
                     <View style={styles.formStyle}>
                         <View style={styles.inputStyle}>
-                            <TextInput style={{color:'white'}}
+                            <TextInput style={{color:'#000'}}
                                 value={this.state.email}
                                 onChangeText={this.onEmailChange} 
                                 underlineColorAndroid='rgba(0,0,0,0)' 
@@ -55,7 +58,7 @@ import {loginUser} from '../actions';
                                 />
                         </View>
                         <View style={styles.inputStyle}>
-                            <TextInput style={{color:'white'}}
+                            <TextInput style={{color:'#000'}}
                                 value={this.state.password} 
                                 onChangeText={this.onPasswordChange}
                                 underlineColorAndroid='rgba(0,0,0,0)' 
@@ -69,6 +72,9 @@ import {loginUser} from '../actions';
                         <TouchableOpacity style={styles.button} onPress={this.onLoginPressed}>
                             <Text style={styles.buttonText}>Login</Text>
                         </TouchableOpacity>    
+                        <TouchableOpacity onPress={()=>{this.props.navigation.navigate('signUp');}} style={{alignItems:'center'}}>
+                            <Text>Signup?</Text>
+                        </TouchableOpacity>
                     </View>
             </View>
         )
@@ -87,7 +93,7 @@ const styles={
     container:{
         flex:1,
         flexGrow:1,
-        backgroundColor:'#116466',
+        backgroundColor:'#fff',
         justifyContent:'center',
         alignItems:'center'
     },
@@ -114,13 +120,14 @@ const styles={
         paddingHorizontal:16,
         fontSize:16,
         color:'#ffffff',
-        marginVertical: 10  
+        marginVertical: 10  ,
+        borderWidth:1
     },
     button: {
         width:300,
         backgroundColor:'#1c313a',
          borderRadius: 25,
-          marginVertical: 10,
-          paddingVertical: 13
+          marginVertical: 20,
+          paddingVertical: 13,
       }
 }

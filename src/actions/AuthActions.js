@@ -22,3 +22,8 @@ export const loginUser=({email,password,navigation})=>{
         })
     }
 }
+
+
+export const signupUser=({name,email,phone,organization})=>{
+    //later
+}

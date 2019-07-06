@@ -8,7 +8,8 @@ import Settings from './drawer/Settings';
 import Bookmarks from './drawer/Bookmarks';
 import {Text,View,Image} from 'react-native';
 import Announcement from './callstack/Announcement';
-import {StatusBar} from 'react-native'
+import {StatusBar} from 'react-native';
+import SignUp from './SignUp';
 
 
 import {Container,Header, Body, Content} from 'native-base';
@@ -215,7 +216,8 @@ const ProfileStack = createStackNavigator(
 
 const Auth = createStackNavigator(
     {
-        signIn:Login
+        signIn:Login,
+        signUp: SignUp
     },
     {
         initialRouteName: 'signIn',
