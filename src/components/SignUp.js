@@ -121,6 +121,7 @@ class SignUp extends React.Component{
                                 underlineColorAndroid='rgba(0,0,0,0)' 
                                 placeholder="Password"
                                 placeholderTextColor = "#aaa"
+                                secureTextEntry={true}
                                 returnKeyType="done"
                                 //ref={(input) => this.password = input}
                                 />

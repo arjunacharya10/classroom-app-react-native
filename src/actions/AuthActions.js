@@ -9,7 +9,7 @@ export const loginUser=({email,password,navigation})=>{
             email:email,
             password:password
         })
-        .then(userid=>{dispatch({type:LOGIN_SUCCESS,payload:{userid:userid.data}}); navigation.navigate('App')})
+        .then(userid=>{console.log(userid);dispatch({type:LOGIN_SUCCESS,payload:{userid:userid.data}}); navigation.navigate('App')})
         .catch(err=>alert('Error logging in'))
     }
 }

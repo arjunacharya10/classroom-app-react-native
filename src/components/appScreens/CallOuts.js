@@ -90,7 +90,7 @@ class CallOuts extends React.Component{
 
     render(){
         
-
+        console.log(this.state);
         return(
             <SafeAreaView style={{flex:1,backgroundColor:'rgba(0,0,0,0)'}}>
                 <StatusBar backgroundColor="#fff" barStyle="dark-content"/>

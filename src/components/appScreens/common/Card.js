@@ -17,6 +17,8 @@ const url = Platform.select({
 
 class Card extends React.Component{
 
+    
+
     onViewMore=(onPress)=>{
         return(
             <Text onPress={onPress}>View more</Text>
@@ -29,17 +31,26 @@ class Card extends React.Component{
 
 
     render(){
+        const lat=this.props.lat;
+        const lng=this.props.long;
+        const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+        const latLng = `${lat},${lng}`;
+        const label = 'Custom Label';
+        const url = Platform.select({
+        ios: `${scheme}${label}@${latLng}`,
+        android: `${scheme}${latLng}(${label})`
+});
         return(
             <View style={{flex:1,elevation:2,borderRadius:3,backgroundColor:'white',borderBottomWidth:0,borderColor:'#ddd',margin:10,marginHorizontal:20,justifyContent:'center'}}>
                 <View style={{flex:1,flexDirection:'row',alignContent:'flex-start',padding:10,borderBottomWidth:1,borderBottomColor:'#ddd'}}>
                     
                     
                     <View style={{flex:1,alignItems:'flex-start'}}>
-                        <Text style={{color:'#000',fontSize:12,fontFamily:'roboto',fontWeight:'700'}}>Date</Text>
+                        <Text style={{color:'#000',fontSize:12,fontFamily:'roboto',fontWeight:'700'}}>{this.props.date}</Text>
                     </View>
 
                     <View style={{flex:2,alignItems:'center'}}>
-                        <Text style={{color:'#000',fontSize:15,fontFamily:'roboto',fontWeight:'700'}}>Subject</Text>
+                        <Text style={{color:'#000',fontSize:15,fontFamily:'roboto',fontWeight:'700'}}>{this.props.name}</Text>
                     </View>
                     <View style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
                             <Icon color={this.props.approved?"#116466":"red"} name={this.props.approved?"ios-checkmark":"ios-alert"} size={20}/>
@@ -56,7 +67,8 @@ class Card extends React.Component{
                     textStyle={{textAlign: 'center'}}
                     >
                     <Text>
-                        Lorem ipsum dolor sit amet, in quo dolorum ponderum, nam veri molestie constituto eu. Eum enim tantas sadipscing ne, ut omnes malorum nostrum cum. Errem populo qui ne, ea ipsum antiopam definitionem eos.Lorem ipsum dolor sit amet, in quo dolorum ponderum, nam veri molestie constituto eu. Eum enim tantas sadipscing ne, ut omnes malorum nostrum cum. Errem populo qui ne, ea ipsum antiopam definitionem eos.Lorem ipsum dolor sit amet, in quo dolorum ponderum, nam veri molestie constituto eu. Eum enim tantas sadipscing ne, ut omnes malorum nostrum cum. Errem populo qui ne, ea ipsum antiopam definitionem eos.Lorem ipsum dolor sit amet, in quo dolorum ponderum, nam veri molestie constituto eu. Eum enim tantas sadipscing ne, ut omnes malorum nostrum cum. Errem populo qui ne, ea ipsum antiopam definitionem eos.
+                        
+                        {`${this.props.desc} Lorem ipsum dolor sit amet, in quo dolorum ponderum, nam veri molestie constituto eu. Eum enim tantas sadipscing ne, ut omnes malorum nostrum cum. Errem populo qui ne, ea ipsum antiopam definitionem eos.Lorem ipsum dolor sit amet, in quo dolorum ponderum, nam veri molestie constituto eu. Eum enim tantas sadipscing ne, ut omnes malorum nostrum cum. Errem populo qui ne, ea ipsum antiopam definitionem eos.Lorem ipsum dolor sit amet, in quo dolorum ponderum, nam veri molestie constituto eu. Eum enim tantas sadipscing ne, ut omnes malorum nostrum cum. Errem populo qui ne, ea ipsum antiopam definitionem eos.Lorem ipsum dolor sit amet, in quo dolorum ponderum, nam veri molestie constituto eu. Eum enim tantas sadipscing ne, ut omnes malorum nostrum cum. Errem populo qui ne, ea ipsum antiopam definitionem eos.`}
                     </Text>
                 </ViewMoreText>
                         <TouchableOpacity style={{paddingTop:30}} width={100} height={100} onPress={()=>Linking.openURL(url)}>

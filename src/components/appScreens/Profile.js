@@ -12,6 +12,18 @@ class Profile extends React.Component{
                             <Text style={{fontSize:24,fontFamily:'roboto',fontWeight:'700',textAlign:'center'}}>Profile</Text>
                         </View>
                     </View>
+                    <View style={{flex:2,justifyContent:'center',alignItems:'center',marginTop:10}}>
+                        <Image source={require('../images/user.png')} height={50} width={50} style={{borderRadius:25}}/>
+                    </View>
+                    <View style={{flex:1}}>
+                            <Text>User Name</Text>
+                    </View>
+                    <View style={{flex:1}}>
+                            <Text>User Name</Text>
+                    </View>
+                    <View style={{flex:1}}>
+                            <Text>User Name</Text>
+                    </View>
                 </View>
             </SafeAreaView>
         )
