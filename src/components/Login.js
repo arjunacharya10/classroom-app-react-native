@@ -26,12 +26,22 @@ import axios from 'axios';
     }
 
     onLoginPressed=()=>{
-        axios.post('http://192.168.43.169:5000/authenticateVolunteer',{
+        /*axios.post('http://192.168.43.169:5000/authenticateVolunteer',{
             email:this.state.email,
             password:this.state.password
         })
-        .then(userid=>{this.props.navigation.navigate('App',{userid:userid});})
-        .catch(err=>alert('Error logging in'));
+        .then(userid=>{console.log(userid.data);this.props.navigation.navigate("App", {}, {
+            type: "Navigate", 
+            routeName: "CallOuts",
+            action: {
+                type: "Navigate", 
+                routeName: "CallOuts", 
+                params: {userid: userid.data}
+            }
+        })})
+        .catch(err=>alert('Error logging in'));*/
+
+        this.props.loginUser({email:this.state.email,password:this.state.password,navigation:this.props.navigation});
         
         //this.props.loginUser({email:this.state.email,password:this.state.password,navigation:''});
     }

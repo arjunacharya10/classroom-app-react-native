@@ -1,10 +1,11 @@
 import React from 'react';
-import {Text,View,TouchableOpacity,Button,Image} from 'react-native';
+import {Text,View,TouchableOpacity,Image,Button,Platform,Linking} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { StackActions } from 'react-navigation';
 import { TextInput } from 'react-native-gesture-handler';
 import { Picker } from 'native-base';
 import ImagePicker from 'react-native-image-picker';
+import axios from 'axios'
 
 const popAction=StackActions.pop({
     n:1
@@ -15,11 +16,8 @@ const popAction=StackActions.pop({
 export default class Announcement extends React.Component{
     
     state={
-        photo:null,
-        subject:'',
-        body:'',
-        class:'',
-        details:''
+        details:{},
+        userId:''
     }
 
     onSubjectChange=(text)=>{
@@ -38,7 +36,7 @@ export default class Announcement extends React.Component{
             maxHeight: 500,
             storageOptions: {
               skipBackup: true
-            }
+            },
           };
 
         ImagePicker.showImagePicker(options, (response) => {
@@ -61,27 +59,62 @@ export default class Announcement extends React.Component{
             }
           });
     }
-    componentDWillMount=()=>{
+    componentWillMount=()=>{
         const details = this.props.navigation.getParam('details',{});
-        this.setState({details:details.data});
-        console.log(details.data);
+        const userId = this.props.navigation.getParam('userid','');
+        this.setState({details:details.data,userId:userId});
+    }
+
+    onPress=()=>{
+        alert('Ahhhh');
+    }
+
+    registerForEvent=()=>{
+        axios.post('http://192.168.43.169:5000/registerEvent',{
+            eventId:this.state.details._id,
+            volunteerId:this.state.userId
+        })
+        .then(resp=>{alert(resp.data);this.props.navigation.dispatch(popAction)})
+        .catch(err=>alert('Already registered!'))
     }
     
     
     render(){
+        const lat=this.state.details.location.lat;
+        const lng=this.state.details.location.lng;
+
+        const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+        const latLng = `${lat},${lng}`;
+        const label = 'Custom Label';
+        const url = Platform.select({
+        ios: `${scheme}${label}@${latLng}`,
+        android: `${scheme}${latLng}(${label})`
+        });
         return(
             <View style={{flex:1}}>
                 <TouchableOpacity onPress={()=>this.props.navigation.dispatch(popAction)} style={{flex:1,padding:10}}>
                     <Icon name="ios-close" size={30}/>
                 </TouchableOpacity>
-                <Text style={{textAlign:'center',fontFamily:'roboto',fontSize:24,fontWeight:'500'}}>{details.name}</Text>
-                <Text>Description</Text>
-                <Text>{details.description}</Text>
-                <View>
-                    <Text>From</Text>
-                    <Text>To</Text>
+                <View style={{flex:4,padding:20}}>
+                    <View style={{flex:1}}>
+                        <Text style={{textAlign:'center',fontFamily:'roboto',fontSize:30,fontWeight:'500'}}>{this.state.details.name}</Text>
+                    </View>
+                    <View style={{flex:1}}>
+                        <Text style={{fontFamily:'roboto',fontSize:20,fontWeight:'500'}}>Description</Text>
+                        <Text>{this.state.details.description}</Text>
+                    </View>
+                    <View style={{flex:1}}>
+                        <Text style={{fontFamily:'roboto',fontSize:20,fontWeight:'500'}}>Skills required</Text>
+                        <Text>Skill list</Text>
+                    </View>
+                    <View style={{flex:1,alignItems:'flex-start'}}>
+                        <Text style={{fontFamily:'roboto',fontSize:20,fontWeight:'500'}}>Location</Text>
+                        <TouchableOpacity style={{alignItems:'center',alignSelf:'center',paddingTop:10}} width={100} height={100} onPress={()=>Linking.openURL(url)}>
+                            <Image style={{alignSelf:'center'}} source={require('../images/gmap.png')} height={100} width={100} resizeMode='contain'/>
+                        </TouchableOpacity>
+                    </View>
+                    <Button onPress={this.registerForEvent} style={{flex:1}}  title="Register"/>
                 </View>
-                
             </View>
         )
     }
@@ -90,15 +123,21 @@ export default class Announcement extends React.Component{
 const styles={
     buttonStyle:{
         flex:1,
+        alignSelf: 'stretch',
         backgroundColor: '#007aff',
         marginLeft: 10,
         marginRight: 10,
         borderRadius: 5,
+        margin:30,
         borderWidth: 1,
-        marginTop:20,
-        borderColor: '#007aff',
-        justifyContent:'center',
-        alignItems:'center'
+        borderColor: '#007aff'
+    },
+    textStyle:{
+        alignSelf:'center',
+        color:'#fff',
+        fontSize: 16,
+        paddingTop: 10,
+        paddingBottom: 10
     }
 }
 
@@ -152,4 +191,32 @@ const styles={
         </TouchableOpacity>
     </View>
 </View>
+}*/
+
+/*{
+    <View style={{flex:1}}>
+                <TouchableOpacity onPress={()=>this.props.navigation.dispatch(popAction)} style={{flex:1,padding:10}}>
+                    <Icon name="ios-close" size={30}/>
+                </TouchableOpacity>
+                <Text style={{textAlign:'center',fontFamily:'roboto',fontSize:24,fontWeight:'500',flex:1}}>{this.state.details.name}</Text>
+                <View styel={{flex:1}}>
+                    <Text>Description</Text>
+                    <Text>{this.state.details.description}</Text>
+                </View>
+                <View style={{flex:1}}>
+                    <Text>From</Text>
+                    <Text>To</Text>
+                </View>
+                <View style={{flex:1}}>
+                    <Text>Skills you have among these</Text>
+                    <Text>Skill list</Text>
+                </View>
+                <View>
+
+                </View>
+                <TouchableOpacity style={styles.buttonStyle} onPress={this.onPress}>
+                    <Text style={styles.textStyle}>Register</Text>
+                </TouchableOpacity>
+
+            </View>
 }*/

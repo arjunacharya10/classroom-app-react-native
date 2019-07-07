@@ -6,6 +6,8 @@ import PTRView from 'react-native-pull-to-refresh'
 import CallOutComp from './common/Calloutcomp';
 import MapView ,{PROVIDER_GOOGLE, Marker, Callout} from 'react-native-maps';
 import axios from 'axios';
+import {connect} from 'react-redux';
+import {randomReducer} from '../../actions/AuthActions'
 
 
 
@@ -33,15 +35,15 @@ class CallOuts extends React.Component{
     }
 
     componentDidMount=()=>{
-        const userid = this.props.navigation.getParam('userid', '');
-        this.setState({userid:userid});
+        this.setState({userid:this.props.auth.userid});
+        console.log(this.state);
         axios.post('http://192.168.43.169:5000/getEvents')
         .then(events=>{this.setState({events:events.data})})
         .catch(err=>{alert("Err");})
     }
 
     showEventDetails=(details)=>{
-        this.props.navigation.navigate('Announcement',{details:details});
+        this.props.navigation.navigate('Announcement',{details:details,userid:this.state.userid});
     }
 
     
@@ -244,5 +246,9 @@ const styles = StyleSheet.create({
                             </Callout>
                         </Marker>
 }*/
+const mapStateToProps=(state)=>{
+    const {auth} = state;
+    return {auth};
+}
 
-export {CallOuts};
+export default connect(mapStateToProps,{randomReducer}) (CallOuts);

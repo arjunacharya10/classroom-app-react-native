@@ -2,8 +2,24 @@ import React from 'react';
 import {Text,View,SafeAreaView} from 'react-native';
 import PTRView from 'react-native-pull-to-refresh';
 import Card from '../appScreens/common/Card';
+import {connect} from 'react-redux';
+import {randomReducer} from '../../actions'
+import axios from 'axios';
 
-export default class RegisteredEvents extends React.Component{
+class RegisteredEvents extends React.Component{
+
+    componentDidMount=()=>{
+        console.log(this.props.userid);
+        axios.post('')
+    }
+
+    onRefresh=()=>{
+        return new Promise((resolve) => {
+            this.forceUpdate();
+            setTimeout(()=>{resolve()}, 2000)
+        });
+    }
+
     render(){
         return(
             <SafeAreaView style={{flex:1}}>
@@ -26,3 +42,10 @@ export default class RegisteredEvents extends React.Component{
         )
     }
 }
+
+const mapStateToProps=(state)=>{
+    const {userid} = state.auth;
+    return {userid};
+}
+
+export default connect(mapStateToProps,{randomReducer})(RegisteredEvents)
