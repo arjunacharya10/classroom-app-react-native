@@ -29,6 +29,7 @@ class RegisteredEvents extends React.Component{
                 .catch(err=>console.log(err))
             })
             this.setState({events:arr});
+            this.onRefresh();
         })
         .catch(err=>console.log(err));
     }

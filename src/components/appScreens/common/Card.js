@@ -4,16 +4,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ViewMoreText from 'react-native-view-more-text';
 
-const lat=37.484847;
-const lng=-122.148386;
-
-const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
-const latLng = `${lat},${lng}`;
-const label = 'Custom Label';
-const url = Platform.select({
-  ios: `${scheme}${label}@${latLng}`,
-  android: `${scheme}${latLng}(${label})`
-});
 
 class Card extends React.Component{
 
@@ -31,15 +21,16 @@ class Card extends React.Component{
 
 
     render(){
+        console.log(this.props);
         const lat=this.props.lat;
-        const lng=this.props.long;
+        const lng=this.props.lng;
         const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
         const latLng = `${lat},${lng}`;
         const label = 'Custom Label';
         const url = Platform.select({
         ios: `${scheme}${label}@${latLng}`,
         android: `${scheme}${latLng}(${label})`
-});
+        });
         return(
             <View style={{flex:1,elevation:2,borderRadius:3,backgroundColor:'white',borderBottomWidth:0,borderColor:'#ddd',margin:10,marginHorizontal:20,justifyContent:'center'}}>
                 <View style={{flex:1,flexDirection:'row',alignContent:'flex-start',padding:10,borderBottomWidth:1,borderBottomColor:'#ddd'}}>
