@@ -53,7 +53,7 @@ class SignUp extends React.Component{
             organization:this.state.org,
             phone:this.state.phone
         })
-        .then(id=>alert(id))
+        .then(id=>this.props.navigation.dispatch(popAction))
         .catch(err=>alert(err));
     }
 
